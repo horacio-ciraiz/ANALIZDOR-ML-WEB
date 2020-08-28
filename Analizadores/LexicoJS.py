@@ -421,7 +421,8 @@ def ErroresLexicos():
 #Analizar("\"Ho\n\nla@\"@")
 #Analizar('asda asd3 @ ')#para = document.querySelector(\'p\');@'
 #Analizar('//"HOla$$$//$$$$@\n@\n\nHoracio@ s')
-Analizar('/*HOla$$$$$$$@\n Horacio@ */@')
+#Analizar('/*HOla$$$$$$$@\n Horacio@ */@')
+Analizar(" function setfocus() \n { \n            document.forms(0).txt.select(); \n            document.forms(0).txt.focus();  \n  }")
 #Analizar('Horacio2 @Hola#  &&&&  223#2      \n \n   HOla')
 ErroresLexicos()
 
