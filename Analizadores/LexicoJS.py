@@ -41,7 +41,7 @@ def ValidarSimbolo(caracter):
 
 
 
-def Analizar(cadena):
+def AnalizarJS(cadena):
     indice=0
     fila=1
     columna=1
@@ -409,7 +409,7 @@ def Analizar(cadena):
 
             
         
-def ErroresLexicos():
+def ErroresLexicosJS():
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
         print(NuevoError)
@@ -422,9 +422,9 @@ def ErroresLexicos():
 #Analizar('asda asd3 @ ')#para = document.querySelector(\'p\');@'
 #Analizar('//"HOla$$$//$$$$@\n@\n\nHoracio@ s')
 #Analizar('/*HOla$$$$$$$@\n Horacio@ */@')
-Analizar(" function setfocus() \n { \n            document.forms(0).txt.select(); \n            document.forms(0).txt.focus();  \n  }")
+AnalizarJS("@function setfocus() \n { \n            document.forms(0).txt.select(); \n            document.forms(0).txt.focus();  \n  }")
 #Analizar('Horacio2 @Hola#  &&&&  223#2      \n \n   HOla')
-ErroresLexicos()
+ErroresLexicosJS()
 
 
 
