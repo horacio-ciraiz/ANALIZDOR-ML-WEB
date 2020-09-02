@@ -1,14 +1,17 @@
-from ErrorLexicoJS import ErrorLexJS
+from Analizadores.ErrorLexicoJS import ErrorLexJS
 
 
 lista_error = list()
 fila=0
 columna=0
+Consola=""
 #nuevo= ErrorLexJS("#",1,2)
 
 #lista_error.append(nuevo)
 #nuevo= ErrorLexJS("%",1,2)
 #lista_error.append(nuevo)
+
+
 
 
 
@@ -23,8 +26,8 @@ def ValidarSimbolo(caracter):
         return 3 # * asterisco   
     elif varascii== 47 :
         return 4 # / diagonal   
-    elif varascii==39 or varascii==37 or varascii==61 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
-        return 5 #simbolos ' % = ; > < ( ) } { + - . , ! & |   
+    elif varascii==39 or varascii==37 or varascii==61 or varascii==58 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
+        return 5 #simbolos ' % = ; : > < ( ) } { + - . , ! & |   
     elif  varascii==32 :
         return 6 #espacio en blanco
     elif varascii==10 :
@@ -41,7 +44,7 @@ def ValidarSimbolo(caracter):
 
 
 
-def AnalizarJS(cadena):
+def AnalizarJS(cadena): 
     indice=0
     fila=1
     columna=1
@@ -225,6 +228,7 @@ def AnalizarJS(cadena):
                     indice+=1
                     columna+=1
 
+
                     while bandera==0: #C-C
                         if indice==len(cadena):
                             break
@@ -235,22 +239,16 @@ def AnalizarJS(cadena):
                         if validacion==7:
                             NuevoError= ErrorLexJS("Salto-Linea",str(fila),str(columna))
                             lista_error.append(NuevoError)
+                            columna=1
+                            bandera=1
                         else:
                             NuevoError= ErrorLexJS(str(letra),str(fila),str(columna))
                             lista_error.append(NuevoError)
-                        
-
-                        if validacion==7: # Salto de Linea
-                            
-                            #fila+=1
-                            columna=1
-                            bandera=1
-                        #Salida de Comentario
-
-                        else: 
                             token=token+letra
                             indice += 1
                             columna+=1     
+                            bandera=1
+
                         # Salida Digito
                     print (token)
 
@@ -399,32 +397,30 @@ def AnalizarJS(cadena):
             NuevoError= ErrorLexJS(str(letra),str(fila),str(columna))
             lista_error.append(NuevoError)
             print("---------Error Lexico----------")
+
             print(letra)
             indice += 1
             columna+=1
-
+    return Consola,lista_error
             
             
             
-
-            
-        
 def ErroresLexicosJS():
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
         print(NuevoError)
-        #print(obj.fila)
-        #print(columna)
-      #print(lista_error)
+            
+        
+
        
 
 #Analizar("\"Ho\n\nla@\"@")
 #Analizar('asda asd3 @ ')#para = document.querySelector(\'p\');@'
 #Analizar('//"HOla$$$//$$$$@\n@\n\nHoracio@ s')
 #Analizar('/*HOla$$$$$$$@\n Horacio@ */@')
-AnalizarJS("@function setfocus() \n { \n            document.forms(0).txt.select(); \n            document.forms(0).txt.focus();  \n  }")
+#AnalizarJS("@function setfocus() \n { \n            document.forms(0).txt.select(); \n            document.forms(0).txt.focus();  \n  }")
 #Analizar('Horacio2 @Hola#  &&&&  223#2      \n \n   HOla')
-ErroresLexicosJS()
+#ErroresLexicosJS()
 
 
 

@@ -1,9 +1,10 @@
-from ErrorLexicoHTML import ErrorLexHTML
+from Analizadores.ErrorLexicoHTML import ErrorLexHTML
+
 
 lista_error = list()
 fila=0
 columna=0
-
+Consola=""
 def ValidarSimbolo(caracter):
     varascii= ord(caracter)
 
@@ -312,7 +313,7 @@ def AnalizarHTML(cadena):
             print(letra)
             indice+=1
             columna+=1 
-
+    return  Consola,lista_error
 def ErroresLexicosHTML():
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
@@ -321,7 +322,7 @@ def ErroresLexicosHTML():
         #print(columna)
       #print(lista_error)
 
-AnalizarHTML(":<html>\n<head><title><title></head><body><ul>\n <li>Elemento 1</li> <li>Elemento 2</li> <li>Elemento 3</li>\n  <li>Elemento4</li> </ul> <p style=\"color:red; font-size:100px\">Hola Mundo</p></html>")
-ErroresLexicosHTML()
+#AnalizarHTML(":<html>\n<head><title><title></head><body><ul>\n <li>Elemento 1</li> <li>Elemento 2</li> <li>Elemento 3</li>\n  <li>Elemento4</li> </ul> <p style=\"color:red; font-size:100px\">Hola Mundo</p></html>")
+#ErroresLexicosHTML()
 
         

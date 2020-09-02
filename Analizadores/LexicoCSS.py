@@ -1,9 +1,11 @@
-from ErrorLexicoCSS import ErrorLexCSS
+from Analizadores.ErrorLexicoCSS import ErrorLexCSS
+
 
 
 lista_error = list()
 fila=0
 columna=0
+Consola=""
 
 def ValidarSimbolo(caracter):
     varascii= ord(caracter)
@@ -436,7 +438,7 @@ def AnalizarCSS(cadena):
             print(letra)
             indice+=1
             columna+=1 
-
+    return Consola,lista_error
 def ErroresLexicosCSS():
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
@@ -445,7 +447,7 @@ def ErroresLexicosCSS():
         #print(columna)
       #print(lista_error)
 
-AnalizarCSS(
+'''AnalizarCSS(
     ".ejemplo{ " #1
 " \n margin-top: 0;" #2
 " \n margin-bottom: 0.5em;" #3
@@ -465,7 +467,7 @@ AnalizarCSS(
 " \n /* %--- Comentario de \n una sola línea ---$ */ @"
 ) #15
 
-ErroresLexicosCSS()
+ErroresLexicosCSS()''' 
 
 
 
