@@ -5,7 +5,9 @@ from Analizadores.ErrorLexicoCSS import ErrorLexCSS
 lista_error = list()
 fila=0
 columna=0
-Consola=""
+ConsolaCSS=""
+BitacoraCSS=""
+
 
 def ValidarSimbolo(caracter):
     varascii= ord(caracter)
@@ -48,6 +50,7 @@ def AnalizarCSS(cadena):
         #----------------------ID---------------------
         if validacion==1 : #Letra en ID A-B
             
+           
             print ("--------------ID---------")
             
             #print("Letra")
@@ -438,7 +441,7 @@ def AnalizarCSS(cadena):
             print(letra)
             indice+=1
             columna+=1 
-    return Consola,lista_error
+    return ConsolaJS,lista_error
 def ErroresLexicosCSS():
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)

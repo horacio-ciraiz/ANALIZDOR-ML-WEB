@@ -4,7 +4,8 @@ from Analizadores.ErrorLexicoJS import ErrorLexJS
 lista_error = list()
 fila=0
 columna=0
-Consola=""
+
+
 #nuevo= ErrorLexJS("#",1,2)
 
 #lista_error.append(nuevo)
@@ -45,9 +46,14 @@ def ValidarSimbolo(caracter):
 
 
 def AnalizarJS(cadena): 
+    Consola=""
     indice=0
     fila=1
     columna=1
+    banderaID=0
+    banderaDigito=0
+    banderaCadena=0
+
 
     token=""
     cadenaJS=""
@@ -61,7 +67,9 @@ def AnalizarJS(cadena):
         if validacion==1 : #Letra en ID A-B
             
             print ("--------------ID---------")
-            
+            if banderaID==0:
+                Consola+="S0->S1 [label=\""+letra+"\"]\n"
+
             #print("Letra")
             token=token+letra
             bandera=0
@@ -76,19 +84,24 @@ def AnalizarJS(cadena):
                 
 
                 if validacion==1: # Letra
-                    
+                    if banderaID==0:
+                        Consola+="S1->S1 [label=\""+letra+"\"]\n"
                     #print("letra")
                     token=token+letra
                     indice += 1
                     columna+=1
                 elif validacion==2: #Digito
-                    
+                    if banderaID==0:#validar banderaID
+                        Consola+="S1->S1 [label=\""+letra+"\"]\n"
                     token=token+letra
                     #print("digito")
                     indice += 1
                     columna+=1
                 else:
-                              
+                    if banderaID==0:#validar banderaID
+                        Consola+="S1[shape=\"doublecircle\"]\n" 
+                        #Consola+="S1->S0 [label=\""+letra+"\"]\n"
+                        banderaID= 1         
                     bandera=1
             print (token)
 
@@ -96,7 +109,8 @@ def AnalizarJS(cadena):
             
         #----------------------Digito-----------------
         elif validacion==2: #Digito en A - C
-            
+            if banderaDigito==0:#validar banderaDigito
+                Consola+="S0->S2 [label=\""+letra+"\"]\n" 
             print("----------Digito----------")
             
             token=token+letra
@@ -111,11 +125,17 @@ def AnalizarJS(cadena):
                 validacion = ValidarSimbolo(letra)
 
                 if validacion==2: # Letra 
+                    if banderaDigito==0:#validar banderaDigito
+                        Consola+="S2->S2 [label=\""+letra+"\"]\n" 
                     #print("letra")
                     token=token+letra
                     indice += 1
                     columna+=1
-                else:      
+                else:     
+                    if banderaDigito==0:#validar banderaDigito
+                        Consola+="S2[shape=\"doublecircle\"]\n" 
+                        #Consola+="S2->S0 [label=\""+letra+"\"]\n"  
+                        banderaDigito=1
                     bandera=1 # Salida Digito
             print (token)
             token=""
@@ -346,7 +366,8 @@ def AnalizarJS(cadena):
             
         #-------------------Cadena-----------------------
         elif validacion==10: # Comilla A- K 
-            
+            if banderaCadena==0:#validar banderaCadena
+                        Consola+="S0->S3 [label=\"comilla\"]\n"  
             token=token+letra
             bandera=0
             indice += 1
@@ -355,7 +376,10 @@ def AnalizarJS(cadena):
             while bandera==0: #B-B
                 if indice==len(cadena):
                     print("ERROR CADENA 0")
-                    
+                    if banderaCadena==0:#validar banderaCadena
+                        #Consola+="S4->S0 [label=\""+letra+"\"]\n"
+                        #Consola+="S4[shpae=\"doublecircle\"]\n" 
+                        banderaCadena=1  
                     NuevoError= ErrorLexJS(str(letra),str(fila),str(columna))
                     lista_error.append(NuevoError)
                     break
@@ -363,14 +387,20 @@ def AnalizarJS(cadena):
                 validacion = ValidarSimbolo(letra)
                 
                 if validacion==10: # Comilla
-                    
+                    if banderaCadena==0:#validar banderaCadena
+                        Consola+="S3->S4 [label=\"comilla\"]\n" 
+                        Consola+="S4[shape=\"doublecircle\"]\n"   
+                        banderaCadena=1
                     #print("letra")
                     bandera=1
                     token=token+letra
                     indice += 1
                     columna+=1
                 elif validacion==7:
-                    
+                    if banderaCadena==0:#validar banderaCadena
+                        #Consola+="S4->S0 [label=\""+letra+"\"]\n"  
+                        Consola+="S4[shape=\"doublecircle\"]\n" 
+                        banderaCadena=1  
                     print("ERROR CADENA 1")
                     NuevoError= ErrorLexJS("Salto-Linea",str(fila),str(columna))
                     lista_error.append(NuevoError)
@@ -382,7 +412,9 @@ def AnalizarJS(cadena):
                     fila+=1
 
                 else: #Lo que sea 
-                    
+                    if banderaCadena==0:#validar banderaCadena
+                        Consola+="S3->S3 [label=\""+letra+"\"]\n"  
+
                     token=token+letra
                     #print("digito")
                     indice += 1

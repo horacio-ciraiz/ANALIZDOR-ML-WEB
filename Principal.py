@@ -3,6 +3,9 @@ from tkinter import Menu
 from tkinter import filedialog
 from tkinter import scrolledtext
 from tkinter import messagebox
+import os
+from subprocess import check_call
+
 #--------------Importa JS
 from Analizadores.LexicoJS import AnalizarJS
 from Analizadores.LexicoJS import ErroresLexicosJS
@@ -23,8 +26,8 @@ class INTERFACE:
 
     def __init__(self):
         self.Ventana = Tk()
-        self.txtEntrada= Entry(self.Ventana,width=10)
-        self.txtConsola= Entry(self.Ventana,width=10)
+        self.txtEntrada= Entry(self.Ventana,width=100)
+        self.txtConsola= Entry(self.Ventana,width=100)
 
         #VENTANA
         self.Ventana.title("Proyecto 1 - ML WEB EDITOR 201513758")
@@ -85,6 +88,7 @@ class INTERFACE:
 
         self.txtConsola = scrolledtext.ScrolledText(self.Ventana,width=45,height=30,bg="black",fg="white",insertbackground="white")
         self.txtConsola.place(x=381,y=1)
+        
 
         self.Ventana.mainloop()
 
@@ -109,7 +113,20 @@ class INTERFACE:
         Consola,lista_errorJS=AnalizarJS(entrada)
         self.txtConsola.delete("1.0", END)
         self.txtConsola.insert("1.0", Consola)
+        
+        
+        CadenaGrap="digraph G {"+ Consola+"}"
+        archi1 = open("ReporteJS.dot","w") 
+        archi1.write(CadenaGrap) 
+        archi1.close() 
+
+
         messagebox.showinfo('Project 1', 'Analisis JS Terminado')
+        #check_call(['dot', '-Tpng','C:/Users/Horacio Ciraiz/Documents/CURSOS/2DO SEMESTRE 2020/PROGRAMACION/LABORATORIO/Proyecto1/OLC1_Proyecto1_201513758/ReporteJS.dot','-o','C:/Users/Horacio Ciraiz/Documents/CURSOS/2DO SEMESTRE 2020/PROGRAMACION/LABORATORIO/Proyecto1/OLC1_Proyecto1_201513758/ReporteJS.png'])
+        check_call(['dot', '-Tpng','ReporteJS.dot','-o','ReporteJS.png'])
+        
+        #subprocess.call('dot ReporteJS.dot -o ReporteJS.png -Tpng ', shell=True)
+        #os.system("dot -ReportejS.png -Tpng ReporteJS.dot")
 
     #---------------Metodo Error Lexico JS-----------------
     def ErroresLexicosJS(self):
@@ -124,6 +141,10 @@ class INTERFACE:
         self.txtConsola.delete("1.0", END)
         self.txtConsola.insert("1.0", Consola)
         messagebox.showinfo('Project 1', 'Analisis CSS Terminado')
+
+        
+
+
     #----------------Metodo Error Lexico CSS----------------
     def ErroresLexicosCSS(self):
         ErroresLexicosCSS()
