@@ -1,17 +1,1 @@
-digraph G {S0->S1 [label="c"]
-S1->S1 [label="d"]
-S1->S1 [label="f"]
-S1->S1 [label="a"]
-S1->S1 [label="d"]
-S1->S1 [label="s"]
-S1->S1 [label="f"]
-S1->S1 [label="a"]
-S1->S1 [label="d"]
-S1->S1 [label="s"]
-S1->S1 [label="f"]
-S1->S1 [label="a"]
-S1->S1 [label="s"]
-S1->S1 [label="f"]
-S1->S1 [label="d"]
-S1[shape="doublecircle"]
-}
+digraph G {}

@@ -438,12 +438,28 @@ def AnalizarJS(cadena):
             
             
 def ErroresLexicosJS():
+    CadenaHTML=""
+    ArchivoErroresJS = open("ErroresLexicosJS.html","w") 
+    ArchivoErroresJS.write(CadenaHTML) 
+    ArchivoErroresJS.close() 
+
+    
+    CadenaHTML+="<html><head><title>Errores Lexicos JS</title></head> "
+    CadenaHTML+="<body><h1 align=center>Errores Lexicos Javascripts</h1>"
+    CadenaHTML+="<table border=2 width=400 align=center>"
+    CadenaHTML+="<tr><td>Simbolo</td><td>Fila</td><td>Columna</td></tr>"
+
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
+        CadenaHTML+= "<tr> <td>" + str(obj.simbolo) + "</td><td>" + str(obj.fila) + "</td><td> " + str(obj.columna)+"</td></tr>"
         print(NuevoError)
+
+    CadenaHTML+="</table></body></html>"    
             
         
-
+    ArchivoErroresJS = open("ErroresLexicosJS.html","w") 
+    ArchivoErroresJS.write(CadenaHTML) 
+    ArchivoErroresJS.close() 
        
 
 #Analizar("\"Ho\n\nla@\"@")
