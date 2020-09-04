@@ -53,7 +53,8 @@ def AnalizarJS(cadena):
     banderaID=0
     banderaDigito=0
     banderaCadena=0
-
+    
+    del lista_error[:]
 
     token=""
     cadenaJS=""

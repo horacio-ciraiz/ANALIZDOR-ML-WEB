@@ -10,6 +10,7 @@ BitacoraCSS=""
 
 
 def ValidarSimbolo(caracter):
+    
     varascii= ord(caracter)
 
     if varascii>=65 and varascii<=90 or varascii>=97 and varascii<=122 :
@@ -36,6 +37,7 @@ def ValidarSimbolo(caracter):
         return 0
 
 def AnalizarCSS(cadena):
+    del lista_error[:]
     indice=0
     fila=1
     columna=0
@@ -279,8 +281,8 @@ def AnalizarCSS(cadena):
                 if indice==len(cadena):
                     print("ERROR CADENA 0")
                     
-                    NuevoError= ErrorLexCSS(str(letra),str(fila),str(columna))
-                    lista_error.append(NuevoError)
+                    #NuevoError= ErrorLexCSS(str(letra),str(fila),str(columna))
+                    #lista_error.append(NuevoError)
                     break
                 letra = cadena[indice]
                 validacion = ValidarSimbolo(letra)
@@ -441,14 +443,31 @@ def AnalizarCSS(cadena):
             print(letra)
             indice+=1
             columna+=1 
-    return ConsolaJS,lista_error
+    return ConsolaCSS,lista_error
+
 def ErroresLexicosCSS():
+    CadenaHTML=""
+    ArchivoErroresCSS = open("ErroresLexicosCSS.html","w") 
+    ArchivoErroresCSS.write(CadenaHTML) 
+    ArchivoErroresCSS.close() 
+
+    
+    CadenaHTML+="<html><head><title>Errores Lexicos CSS</title></head> "
+    CadenaHTML+="<body><h1 align=center>Errores Lexicos CSS</h1>"
+    CadenaHTML+="<table border=2 width=400 align=center>"
+    CadenaHTML+="<tr><td>Simbolo</td><td>Fila</td><td>Columna</td></tr>"
+
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
+        CadenaHTML+= "<tr> <td>" + str(obj.simbolo) + "</td><td>" + str(obj.fila) + "</td><td> " + str(obj.columna)+"</td></tr>"
         print(NuevoError)
-        #print(obj.fila)
-        #print(columna)
-      #print(lista_error)
+
+    CadenaHTML+="</table></body></html>"    
+            
+        
+    ArchivoErroresCSS = open("ErroresLexicosCSS.html","w") 
+    ArchivoErroresCSS.write(CadenaHTML) 
+    ArchivoErroresCSS.close() 
 
 '''AnalizarCSS(
     ".ejemplo{ " #1

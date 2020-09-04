@@ -35,7 +35,7 @@ def AnalizarHTML(cadena):
     indice=0
     fila=1
     columna=0
-
+    del lista_error[:]
     token=""
     cadenaHTML=""
 
@@ -315,9 +315,29 @@ def AnalizarHTML(cadena):
             columna+=1 
     return  Consola,lista_error
 def ErroresLexicosHTML():
+    CadenaHTML=""
+    ArchivoErroresHTML = open("ErroresLexicosHTML.html","w") 
+    ArchivoErroresHTML.write(CadenaHTML) 
+    ArchivoErroresHTML.close() 
+
+    
+    CadenaHTML+="<html><head><title>Errores Lexicos HMTL</title></head> "
+    CadenaHTML+="<body><h1 align=center>Errores Lexicos HTML</h1>"
+    CadenaHTML+="<table border=2 width=400 align=center>"
+    CadenaHTML+="<tr><td>Simbolo</td><td>Fila</td><td>Columna</td></tr>"
+
     for obj in lista_error: 
         NuevoError= "simbolo: " + str(obj.simbolo) + " fila: " + str(obj.fila) + " columna: " + str(obj.columna)
+        CadenaHTML+= "<tr> <td>" + str(obj.simbolo) + "</td><td>" + str(obj.fila) + "</td><td> " + str(obj.columna)+"</td></tr>"
         print(NuevoError)
+
+    CadenaHTML+="</table></body></html>"    
+            
+        
+    ArchivoErroresHTML = open("ErroresLexicosHTML.html","w") 
+    ArchivoErroresHTML.write(CadenaHTML) 
+    ArchivoErroresHTML.close() 
+       
         #print(obj.fila)
         #print(columna)
       #print(lista_error)
