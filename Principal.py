@@ -23,19 +23,26 @@ from Analizadores.ErrorLexicoHTML import ErrorLexHTML
 
 
 class INTERFACE:
-
+    DireccionTemporal=""
     def __init__(self):
         self.Ventana = Tk()
-        self.txtEntrada= Entry(self.Ventana,width=100)
-        self.txtConsola= Entry(self.Ventana,width=100)
+        self.txtEntrada= Text(self.Ventana,width=100)
+        self.txtConsola= Text(self.Ventana,width=100)
+        
+        
+        #textContainer = Frame(self.Ventana, borderwidth=1, relief="suken")
+        #txtEntrada = Text(textContainer, width=24, height=13, wrap="none", borderwidth=0)
+        #textVsb = Scrollbar(textContainer, orient="vertical", command=txtEntrada.yview)
+        #textHsb = Scrollbar(textContainer, orient="horizontal", command=txtEntrada.xview)
+        #txtEntrada.configure(yscrollcommand=textVsb.set, xscrollcommand=textHsb.set)
 
+        
         #VENTANA
         self.Ventana.title("Proyecto 1 - ML WEB EDITOR 201513758")
         self.Ventana.geometry('763x487+250+100')
         self.Ventana.configure(bg='#474140')
         self.Ventana.resizable(0, 0)
-        #self.lbl = Label(self.Ventana,text="ML WEB" ,width=70 ,font=("Arial Bold",15))
-        #self.lbl.place(x=0,y=0)
+
 
         # MENU 
         self.Menus= Menu(self.Ventana)
@@ -83,20 +90,21 @@ class INTERFACE:
         
 
         #ENTRADA
-        self.txtEntrada = scrolledtext.ScrolledText(self.Ventana,width=45,height=30)
+        self.txtEntrada = scrolledtext.ScrolledText(self.Ventana,width=45,height=30,wrap="none")
+        self.txtEntrada.pack(side="left", fill="both", expand=True)
         self.txtEntrada.place(x=0,y=1)
+
 
         self.txtConsola = scrolledtext.ScrolledText(self.Ventana,width=45,height=30,bg="black",fg="white",insertbackground="white")
         self.txtConsola.place(x=381,y=1)
-        
-
         self.Ventana.mainloop()
 
     #-----------------Metodo Menu Nuevo-------------------
     def MenuNuevo(self):
         self.txtEntrada.delete('1.0', END)
         self.txtConsola.delete('1.0', END)
-
+    def lines_that_equal(self,line_to_match, fp):
+        return [line for line in fp if line == line_to_match]
     #-----------------Metodo Menu Abrir-------------------  
     def MenuAbrir(self):
         nameFile=filedialog.askopenfilename(title = "Seleccione Archivo",filetypes = (("js files","*.js"), ("html files","*.html"),("css files","*.css"),("All Files","*.*")))
@@ -106,8 +114,27 @@ class INTERFACE:
             archi1.close()
             self.txtEntrada.delete("1.0", END) 
             self.txtEntrada.insert("1.0", contenido)
+            #----------------linea de la direccion
+            search = open(nameFile)
+            for line in search:
+                if "PATHW" in line:
+                    print (line) 
+                    nombreLista = re.split(' |\n',line)
+
+            DireccionTemporal = nombreLista[1]
+            print (DireccionTemporal)
+            search.close()
+
+
     #---------------Metodo Menu Analisis JS ---------------
+
+
     def MenuAnalizarJS(self):
+
+    #------------------econtrar path
+
+
+
         entrada = self.txtEntrada.get("1.0", END) #fila 1 col 0 hasta fila 2 col 10
         #retorno = lexer(entrada)
         Consola,lista_errorJS=AnalizarJS(entrada)
