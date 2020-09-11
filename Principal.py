@@ -63,6 +63,8 @@ class INTERFACE:
         self.Reporte_item.add_separator()
         self.Reporte_item.add_command(label='Reporte CSS')
         self.Reporte_item.add_separator()
+        self.Reporte_item.add_command(label='Reporte RTM')
+        self.Reporte_item.add_separator()        
         self.Reporte_item.add_command(label='Errores JS',command=self.ErroresLexicosJS)
         self.Reporte_item.add_separator()
         self.Reporte_item.add_command(label='Errores CSS',command=self.ErroresLexicosCSS)
@@ -77,6 +79,8 @@ class INTERFACE:
         self.Analizar_item.add_command(label='Analizar CSS',command=self.MenuAnalizarCSS)
         self.Analizar_item.add_separator()
         self.Analizar_item.add_command(label='Analizar HTML',command=self.MenuAnalizarHTML)
+        self.Analizar_item.add_separator()
+        self.Analizar_item.add_command(label='Analizar RTM',command=self.MenuAnalizarRTM)
 
         self.Menus.add_cascade(label='Archivo',menu=self.Archivo_item)
         self.Menus.add_cascade(label='Analizar',menu=self.Analizar_item)
@@ -107,7 +111,7 @@ class INTERFACE:
         return [line for line in fp if line == line_to_match]
     #-----------------Metodo Menu Abrir-------------------  
     def MenuAbrir(self):
-        nameFile=filedialog.askopenfilename(title = "Seleccione Archivo",filetypes = (("js files","*.js"), ("html files","*.html"),("css files","*.css"),("All Files","*.*")))
+        nameFile=filedialog.askopenfilename(title = "Seleccione Archivo",filetypes = (("js files","*.js"),("rtm files","*.rtm"), ("html files","*.html"),("css files","*.css"),("All Files","*.*")))
         if nameFile!='':
             archi1=open(nameFile, "r", encoding="utf-8")
             contenido=archi1.read()
@@ -193,7 +197,8 @@ class INTERFACE:
         ErroresLexicosHTML()
         messagebox.showinfo('Project 1', 'Errores Lexicos HTML')
     
-
+    def MenuAnalizarRTM(self):
+        print("RTM")
        
 
 
