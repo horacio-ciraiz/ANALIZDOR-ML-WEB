@@ -34,7 +34,7 @@ def Evaluar(tokens):
                 Valores.append(val) 
             #----------------ID------------------------------
             elif tokens[i].isidentifier(): 
-                while (i < len(tokens) and tokens[i].isidentifier()):               
+                while (i < len(tokens) and (tokens[i].isidentifier() or tokens[i].isdigit() )):               
                     val = tokens[i] 
                     i += 1
                 i-=1
@@ -42,7 +42,7 @@ def Evaluar(tokens):
             elif tokens[i] == ')': 
           
                 while len(Operaciones) != 0 and Operaciones[-1] != '(': 
-                    if(len(Valores)>1):
+                    if(len(Valores)%1==0):#o Valores>1
                         val2 = Valores.pop() 
                         val1 = Valores.pop() 
                         TokenOperador = Operaciones.pop() 
@@ -74,14 +74,16 @@ def Evaluar(tokens):
         
 
     try:
+
         while len(Operaciones) != 0: 
-          
+            
             val2 = Valores.pop() 
             val1 = Valores.pop() 
             TokenOperador = Operaciones.pop() 
                   
             Valores.append(1) 
-
+        if len(Valores)>1 and len(Operaciones==0):
+            return False
     # Top of 'Valores' contains result, 
     # return it. 
         return True, Valores[-1] 
@@ -90,9 +92,9 @@ def Evaluar(tokens):
         return False
         
 # Driver Code 
-#if __name__ == "__main__": 
+if __name__ == "__main__": 
       
- #   print(Evaluar("(5.50+2+*(3+5(()")) 
+    print(Evaluar("((4 - 6 *(1/8)/2)+(6-9*(2))-(5)*(3*x)/(var1))")) 
   #  print(Evaluar("100 * 2 + 12")) 
    # print(Evaluar("100 * (2+12)")) 
     #print(Evaluar("100 * ( 2 + 12 ) / (14)")) 
