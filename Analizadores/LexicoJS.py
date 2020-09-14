@@ -452,10 +452,10 @@ def ImprimirJSLimpio(direccion,TextoCorrecto):
     print(direccion)
     os.makedirs(direccion, exist_ok=True)
 
-    ArchivoErroresJS = open(direccion+ "ArchivoJSLimpio.js","w") 
-    ArchivoErroresJS.write(TextoCorrecto) 
+    ArchivoLimpioJS = open(direccion+ "ArchivoJSLimpio.js","w") 
+    ArchivoLimpioJS.write(TextoCorrecto) 
     print("Impreso")
-    ArchivoErroresJS.close() 
+    ArchivoLimpioJS.close() 
 
 
 def ErroresLexicosJS():

@@ -329,10 +329,10 @@ def ImprimirHTMLLimpio(direccion,TextoCorrecto):
     print(direccion)
     os.makedirs(direccion, exist_ok=True)
 
-    ArchivoErroresJS = open(direccion+ "ArchivoHTMLLimpio.html","w") 
-    ArchivoErroresJS.write(TextoCorrecto) 
+    ArchivoLimpio = open(direccion+ "ArchivoHTMLLimpio.html","w") 
+    ArchivoLimpio.write(TextoCorrecto) 
     print("Impreso")
-    ArchivoErroresJS.close() 
+    ArchivoLimpio.close() 
 
 def ErroresLexicosHTML():
     CadenaHTML=""

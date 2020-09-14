@@ -508,10 +508,11 @@ def ImprimirCSSLimpio(direccion,TextoCorrecto):
     print(direccion)
     os.makedirs(direccion, exist_ok=True)
 
-    ArchivoErroresJS = open(direccion+ "ArchivoCSSLimpio.css","w") 
-    ArchivoErroresJS.write(TextoCorrecto) 
+    ArchivoLimpioCss = open(direccion+ "ArchivoCSSLimpio.css","w") 
+    ArchivoLimpioCss.write(TextoCorrecto) 
     print("Impreso")
-    ArchivoErroresJS.close() 
+    ArchivoLimpioCss.close() 
+
 def ErroresLexicosCSS():
     CadenaHTML=""
     ArchivoErroresCSS = open("ErroresLexicosCSS.html","w") 

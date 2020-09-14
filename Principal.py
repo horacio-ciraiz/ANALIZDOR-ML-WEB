@@ -26,6 +26,9 @@ from Analizadores.LexicoExpresion import LexRTM
 
 class INTERFACE:
     DireccionTemporal=""
+    DireccionAbierto=""
+    DireccionGuardar=""
+    DireccionGuardarComo=""
     def __init__(self):
         self.Ventana = Tk()
         self.txtEntrada= Text(self.Ventana,width=100)
@@ -54,9 +57,9 @@ class INTERFACE:
         self.Archivo_item.add_separator()
         self.Archivo_item.add_command(label='Abrir',command=self.MenuAbrir)
         self.Archivo_item.add_separator()
-        self.Archivo_item.add_command(label='Guardar')
+        self.Archivo_item.add_command(label='Guardar',command=self.MenuGuardar)
         self.Archivo_item.add_separator()
-        self.Archivo_item.add_command(label='Guardar Como')
+        self.Archivo_item.add_command(label='Guardar Como',command=self.MenuGuardarComo)
 
         #MENU REPORTE
 
@@ -100,10 +103,42 @@ class INTERFACE:
         self.txtEntrada.pack(side="left", fill="both", expand=True)
         self.txtEntrada.place(x=0,y=1)
 
+        
 
         self.txtConsola = scrolledtext.ScrolledText(self.Ventana,width=45,height=30,bg="black",fg="white",insertbackground="white")
         self.txtConsola.place(x=381,y=1)
         self.Ventana.mainloop()
+    #----------------Metodo Guardar Como--------
+    def MenuGuardarComo(self):
+        try:
+            nameFile=filedialog.asksaveasfilename(title = "Seleccione Ubicacion",defaultextension="*.*", filetypes = (("All Files","*.*"),("js files","*.js"),("rmt files","*.rmt"), ("html files","*.html"),("css files","*.css")))
+            
+            if nameFile!='':
+                Texto = self.txtEntrada.get("1.0", END)
+                ArchivoGuardar = open(nameFile,"w",encoding="utf-8") 
+            
+                ArchivoGuardar.write(str(Texto)) 
+                print("Guardar Como")
+               
+                ArchivoGuardar.close()     
+
+        except:
+            print("Error Ruta")
+
+        
+    #-----------------Metdodo Menu Guardar---------------
+        
+    def MenuGuardar(self):
+        try:
+            Texto = self.txtEntrada.get("1.0", END)
+            ArchivoGuardar = open(self.DireccionGuardar,"w",encoding="utf-8") 
+            
+            ArchivoGuardar.write(str(Texto)) 
+            
+            print("Guardado")
+            ArchivoGuardar.close() 
+        except:
+            messagebox.showinfo('Project 1', 'Debe Abrir un Archivo')
 
     #-----------------Metodo Menu Nuevo-------------------
     def MenuNuevo(self):
@@ -115,23 +150,31 @@ class INTERFACE:
     def MenuAbrir(self):
         
         nameFile=filedialog.askopenfilename(title = "Seleccione Archivo",filetypes = (("All Files","*.*"),("js files","*.js"),("rmt files","*.rmt"), ("html files","*.html"),("css files","*.css")))
+        
         if nameFile!='':
+            self.DireccionGuardar=nameFile
             archi1=open(nameFile, "r", encoding="utf-8")
             contenido=archi1.read()
             archi1.close()
             self.txtEntrada.delete("1.0", END) 
             self.txtEntrada.insert("1.0", contenido)
-            #----------------linea de la direccion
-            search = open(nameFile)
-            for line in search:
-                if "PATHW" in line:
-                    print (line) 
-                    nombreLista = re.split(' |\n',line)
-
-            self.DireccionTemporal = nombreLista[1]
-            print (self.DireccionTemporal)
-            search.close()
-
+            try:
+                #----------------linea de la direccion
+                search = open(nameFile)
+                for line in search:
+                    if "PATHW" in line:
+                        print (line) 
+                        nombreLista = re.split(' |\n',line)
+            
+                self.DireccionTemporal = nombreLista[1]
+                print (self.DireccionTemporal)
+                search.close()
+            except:
+                print("no hay ruta")
+        self.txtEntrada.insert(END, "Ehila", 'name')  # <-- tagging `name`
+        self.txtEntrada.insert(END, "Now", 'time')  # <-- tagging `time`
+        self.txtEntrada.tag_config('name', foreground='green')  # <-- Change colors of texts tagged `name`
+        self.txtEntrada.tag_config('time', foreground='red')
 
     #---------------Metodo Menu Analisis JS ---------------
 

@@ -69,9 +69,3 @@ def Evaluar(tokens):
     except:
         #print("Error Sintactico Fatan Numeros")
         return False
-# Driver Code 
-#if __name__ == "__main__": 
-   # print(Evaluar("((4 - 6 *(1/8)/2)+(6-9*(2))-(5)*(3*x)/(var1))")) 
-  #  print(Evaluar("100 * 2 + 12")) 
-   # print(Evaluar("100 * (2+12)")) 
-    #print(Evaluar("100 * ( 2 + 12 ) / (14)")) 
