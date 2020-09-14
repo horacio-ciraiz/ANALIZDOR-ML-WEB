@@ -1,5 +1,5 @@
 from Analizadores.ErrorLexicoJS import ErrorLexJS
-
+import os
 
 lista_error = list()
 fila=0
@@ -19,7 +19,7 @@ columna=0
 def ValidarSimbolo(caracter):
     varascii= ord(caracter)
 
-    if varascii>=65 and varascii<=90 or varascii>=97 and varascii<=122 :
+    if varascii>=65 and varascii<=90 or varascii>=97 and varascii<=122 or varascii==95:
         return 1 #Letras
     elif varascii>= 48 and varascii<=57: 
         return 2 #numeros
@@ -27,11 +27,11 @@ def ValidarSimbolo(caracter):
         return 3 # * asterisco   
     elif varascii== 47 :
         return 4 # / diagonal   
-    elif varascii==39 or varascii==37 or varascii==61 or varascii==58 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
+    elif varascii==39  or varascii==61 or varascii==58 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
         return 5 #simbolos ' % = ; : > < ( ) } { + - . , ! & |   
     elif  varascii==32 :
         return 6 #espacio en blanco
-    elif varascii==10 :
+    elif varascii==10 or(varascii>=0 and varascii<=31):
         return 7 #salto de linea
     elif varascii>=0 and varascii<=31:
         return 8 #control de linea 
@@ -45,7 +45,8 @@ def ValidarSimbolo(caracter):
 
 
 
-def AnalizarJS(cadena): 
+def AnalizarJS(cadena,direccion): 
+    TextoCorrecto=""
     Consola=""
     indice=0
     fila=1
@@ -105,6 +106,7 @@ def AnalizarJS(cadena):
                         banderaID= 1         
                     bandera=1
             print (token)
+            TextoCorrecto+=token
 
             token=""
             
@@ -139,6 +141,7 @@ def AnalizarJS(cadena):
                         banderaDigito=1
                     bandera=1 # Salida Digito
             print (token)
+            TextoCorrecto+=token
             token=""
  
         #---------------Comentario  ---------------------
@@ -182,6 +185,7 @@ def AnalizarJS(cadena):
                                  
                         # Salida Digito
                     print (token)
+                    TextoCorrecto+=token
                     token=""
                     print("----------Fin Comentario Linea--------")
                 #-------------------Comentario Multilinea--------------
@@ -217,7 +221,8 @@ def AnalizarJS(cadena):
                                 break
                         
                             else:
-                                
+                                if(validacion==7):
+                                    fila+=1
                                 token=token+letra
                                 indice += 1 
                                 columna+=1 
@@ -238,6 +243,7 @@ def AnalizarJS(cadena):
                                     columna+=1    
                         # Salida Digito
                     print (token)
+                    TextoCorrecto+=token
                     token=""
                     print("----------Fin Comentario Multilinea--------")
 
@@ -306,6 +312,7 @@ def AnalizarJS(cadena):
                         
                     bandera=1 # Salida Digito
             print (token)
+            TextoCorrecto+=token
             token=""
         #-------------------Espacio en Blanco----------------
         elif validacion==6: #Espacios A-E
@@ -331,6 +338,7 @@ def AnalizarJS(cadena):
                 else:      
                     bandera=1 # Salida Digito
             print (token)
+            TextoCorrecto+=token
             token=""
 
         #-------------------Salto de Linea----------------
@@ -362,6 +370,7 @@ def AnalizarJS(cadena):
                     bandera=1 # Salida Salto
             #print (token) 
             print("")
+            TextoCorrecto+=token
             token=""
                 
             
@@ -422,6 +431,7 @@ def AnalizarJS(cadena):
                     columna+=1
                 
             print (token)
+            TextoCorrecto+=token
             token=""
 
         else: #---------------OTROS CARACTERES------------------
@@ -434,10 +444,20 @@ def AnalizarJS(cadena):
             print(letra)
             indice += 1
             columna+=1
+    ImprimirJSLimpio(direccion,TextoCorrecto)
     return Consola,lista_error
             
             
-            
+def ImprimirJSLimpio(direccion,TextoCorrecto):
+    print(direccion)
+    os.makedirs(direccion, exist_ok=True)
+
+    ArchivoErroresJS = open(direccion+ "ArchivoJSLimpio.js","w") 
+    ArchivoErroresJS.write(TextoCorrecto) 
+    print("Impreso")
+    ArchivoErroresJS.close() 
+
+
 def ErroresLexicosJS():
     CadenaHTML=""
     ArchivoErroresJS = open("ErroresLexicosJS.html","w") 

@@ -12,7 +12,7 @@
  * ============================================================== *
  * ============================================================== *
  ******************************************************************/
-//PATHW: c:\user\output\js\
+//PATHW: C:\Carpeta1\Carpeta2\js\
 
 
         /*********************************************
@@ -118,6 +118,7 @@ function facturar(){
 function logout(){
 
     sessionStorage.clear();
+ 
 
     window.location.href = "login.html";
 }
@@ -199,7 +200,7 @@ function addProducts(data){#
         button1.setAttribute('onclick','agregarCarrito(this);');
         button1.innerHTML = "Agregar al Carrito";/
         button1.innerText = "Agregar al Carrito";
-
+        
         var i1 = document.createElement("i");
         i1.setAttribute("class","fa fa-shopping-cart");
 

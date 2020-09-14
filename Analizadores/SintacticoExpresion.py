@@ -1,17 +1,11 @@
-def Precedencia(TokenOperador): 
-      
+def Precedencia(TokenOperador):   
     if TokenOperador == '+' or TokenOperador == '-': 
         return 1
     if TokenOperador == '*' or TokenOperador == '/': 
         return 2
     return 0
   
- 
-
-  
- 
-def Evaluar(tokens): 
-      
+def Evaluar(tokens):    
     Valores = [] #---------Arreglo Valores
     Operaciones = [] #-----Arreglo Operaciones + - / *
     i = 0
@@ -27,7 +21,6 @@ def Evaluar(tokens):
             #---------------Numeros-------------------------
             elif tokens[i].isdigit(): 
                 while (i < len(tokens) and (tokens[i].isdigit() or tokens[i]==".")): 
-              
                     val = tokens[i]
                     i += 1
                 i-=1
@@ -40,7 +33,6 @@ def Evaluar(tokens):
                 i-=1
                 Valores.append(val)
             elif tokens[i] == ')': 
-          
                 while len(Operaciones) != 0 and Operaciones[-1] != '(': 
                     if(len(Valores)%1==0):#o Valores>1
                         val2 = Valores.pop() 
@@ -52,35 +44,22 @@ def Evaluar(tokens):
                         TokenOperador = Operaciones.pop() 
                         Valores.append(1)
                 Operaciones.pop() 
-          
-
             else: 
- 
-                while (len(Operaciones) != 0 and Precedencia(Operaciones[-1]) >= Precedencia(tokens[i])): 
-                          
+                while (len(Operaciones) != 0 and Precedencia(Operaciones[-1]) >= Precedencia(tokens[i])):       
                     val2 = Valores.pop() 
                     val1 = Valores.pop() 
                     TokenOperador = Operaciones.pop() 
-                  
                     Valores.append(1) 
                 Operaciones.append(tokens[i]) 
-          
             i += 1
-      
     except:
         #print("Error Sintactico Parentesis")
         return False
-
-        
-
     try:
-
         while len(Operaciones) != 0: 
-            
             val2 = Valores.pop() 
             val1 = Valores.pop() 
-            TokenOperador = Operaciones.pop() 
-                  
+            TokenOperador = Operaciones.pop()      
             Valores.append(1) 
         if len(Valores)>1 and len(Operaciones==0):
             return False
@@ -90,11 +69,9 @@ def Evaluar(tokens):
     except:
         #print("Error Sintactico Fatan Numeros")
         return False
-        
 # Driver Code 
-if __name__ == "__main__": 
-      
-    print(Evaluar("((4 - 6 *(1/8)/2)+(6-9*(2))-(5)*(3*x)/(var1))")) 
+#if __name__ == "__main__": 
+   # print(Evaluar("((4 - 6 *(1/8)/2)+(6-9*(2))-(5)*(3*x)/(var1))")) 
   #  print(Evaluar("100 * 2 + 12")) 
    # print(Evaluar("100 * (2+12)")) 
     #print(Evaluar("100 * ( 2 + 12 ) / (14)")) 

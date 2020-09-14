@@ -18,6 +18,8 @@ from Analizadores.ErrorLexicoCSS import ErrorLexCSS
 from Analizadores.LexicoHTML import AnalizarHTML
 from Analizadores.LexicoHTML import ErroresLexicosHTML
 from Analizadores.ErrorLexicoHTML import ErrorLexHTML
+#--------------Importa Expresion 
+from Analizadores.LexicoExpresion import LexRTM
 #from Analizadores.LexicoHTML import AnalizarHTML
 #from Analizadores.LexicoCSS import AnalizarCSS
 
@@ -111,7 +113,8 @@ class INTERFACE:
         return [line for line in fp if line == line_to_match]
     #-----------------Metodo Menu Abrir-------------------  
     def MenuAbrir(self):
-        nameFile=filedialog.askopenfilename(title = "Seleccione Archivo",filetypes = (("js files","*.js"),("rtm files","*.rtm"), ("html files","*.html"),("css files","*.css"),("All Files","*.*")))
+        
+        nameFile=filedialog.askopenfilename(title = "Seleccione Archivo",filetypes = (("All Files","*.*"),("js files","*.js"),("rmt files","*.rmt"), ("html files","*.html"),("css files","*.css")))
         if nameFile!='':
             archi1=open(nameFile, "r", encoding="utf-8")
             contenido=archi1.read()
@@ -125,8 +128,8 @@ class INTERFACE:
                     print (line) 
                     nombreLista = re.split(' |\n',line)
 
-            DireccionTemporal = nombreLista[1]
-            print (DireccionTemporal)
+            self.DireccionTemporal = nombreLista[1]
+            print (self.DireccionTemporal)
             search.close()
 
 
@@ -141,7 +144,7 @@ class INTERFACE:
 
         entrada = self.txtEntrada.get("1.0", END) #fila 1 col 0 hasta fila 2 col 10
         #retorno = lexer(entrada)
-        Consola,lista_errorJS=AnalizarJS(entrada)
+        Consola,lista_errorJS=AnalizarJS(entrada,self.DireccionTemporal)
         self.txtConsola.delete("1.0", END)
         self.txtConsola.insert("1.0", Consola)
         
@@ -168,7 +171,7 @@ class INTERFACE:
     def MenuAnalizarCSS(self):
         entrada = self.txtEntrada.get("1.0", END) #fila 1 col 0 hasta fila 2 col 10
         #retorno = lexer(entrada)
-        Consola,lista_errorCSS=AnalizarCSS(entrada)
+        Consola,lista_errorCSS=AnalizarCSS(entrada,self.DireccionTemporal)
         self.txtConsola.delete("1.0", END)
         self.txtConsola.insert("1.0", Consola)
         messagebox.showinfo('Project 1', 'Analisis CSS Terminado')
@@ -198,6 +201,12 @@ class INTERFACE:
         messagebox.showinfo('Project 1', 'Errores Lexicos HTML')
     
     def MenuAnalizarRTM(self):
+        entrada = self.txtEntrada.get("1.0", END) #fila 1 col 0 hasta fila 2 col 10
+        #retorno = lexer(entrada)
+        Arreglo=[]
+        Arreglo=LexRTM(entrada+"$")
+        self.txtConsola.delete("1.0", END)
+        self.txtConsola.insert("1.0", Arreglo)
         print("RTM")
         
        

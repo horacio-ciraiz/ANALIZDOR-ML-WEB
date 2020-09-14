@@ -1,6 +1,7 @@
-from SintacticoExpresion import Evaluar
+from Analizadores.SintacticoExpresion import Evaluar
 
 def LexRTM(cadena):
+    ArregloResultados=[]
     print("Inicio Analisis")
     cadenatoken=""
     columna=1
@@ -57,9 +58,11 @@ def LexRTM(cadena):
                 CadenaValor="Correcto"
             else:
                 CadenaValor="Incorrecto"
-
-            codigoHTML+="\n <tr> <td align=\"center\">" + cadenatoken + "</td><td align=\"center\">" + CadenaValor + "</td></tr>"
-
+            if(cadenatoken!=""):
+                codigoHTML+="\n <tr> <td align=\"center\">" + cadenatoken + "</td><td align=\"center\">" + CadenaValor + "</td></tr>"
+                CadenaValor+="\n"
+                ArregloResultados.append(CadenaValor)
+                 
             cadenatoken=""
             i+=1
         else:
@@ -68,6 +71,7 @@ def LexRTM(cadena):
             break
     ReporteRTM(codigoHTML)
     codigoHTML=""
+    return ArregloResultados
     #print(cadenatoken)
 
 def ReporteRTM(CadenaTabla):
@@ -89,12 +93,12 @@ def ReporteRTM(CadenaTabla):
 
 
 
-LexRTM("(2+3/3(3+69(5-6))*((2.3+8.5)+3*(535))"
-+ "\n" + "2+6-5*/52"
-+ "\n" + "2+3*5-6"
-+ "\n" + "(5.50+2+*(3+5(()"
-+ "\n" + "(3+-5/5*63-5.30)"
-+ "\n" + "((4 - 6 *(1/8)/2)+(6-9*(2))-(5)*(3*x)/(var1))"
-+ "\n" + "(7/6*2)-(var1 * exp1/r)/(6-8))"
-+ "\n" + "2*(3)+(2+5)-(2.5+3.8)-(1)-(0)"
-+ "\n" + "78-20353.0/85*((3+(2+6)))+3" + " $")
+#LexRTM("(2+3/3(3+69(5-6))*((2.3+8.5)+3*(535))"
+#+ "\n" + "2+6-5*/52"
+#+ "\n" + "2+3*5-6"
+#+ "\n" + "(5.50+2+*(3+5(()"
+#+ "\n" + "(3+-5/5*63-5.30)"
+#+ "\n" + "((4 - 6 *(1/8)/2)+(6-9*(2))-(5)*(3*x)/(var1))"
+#+ "\n" + "(7/6*2)-(var1 * exp1/r)/(6-8))"
+#+ "\n" + "2*(3)+(2+5)-(2.5+3.8)-(1)-(0)"
+#+ "\n" + "78-20353.0/85*((3+(2+6)))+3" + " $")
