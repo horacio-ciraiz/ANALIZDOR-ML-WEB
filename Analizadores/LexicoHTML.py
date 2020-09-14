@@ -1,5 +1,5 @@
 from Analizadores.ErrorLexicoHTML import ErrorLexHTML
-
+import os 
 
 lista_error = list()
 fila=0
@@ -16,8 +16,8 @@ def ValidarSimbolo(caracter):
         return 3 # * asterisco   
     #elif varascii== 47 :
         #return 4 # / diagonal   
-    elif  varascii==47 or varascii==37 or varascii==61 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
-        return 5 #simbolos ' % = ; > < ( ) } { + - . , ! & |   
+    elif  varascii==47 or varascii==58 or varascii==92 or varascii==61 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41   or varascii==45  or varascii==46  or varascii==33:
+        return 5 #simbolos '  = ; > <  \ ( )  + - . , !    
     elif  varascii==32 :
         return 6 #espacio en blanco
     elif varascii==10 :
@@ -31,7 +31,8 @@ def ValidarSimbolo(caracter):
     else: 
         return 0
 
-def AnalizarHTML(cadena):
+def AnalizarHTML(cadena,direccion):
+    TextoLimpio=""
     indice=0
     fila=1
     columna=0
@@ -89,9 +90,9 @@ def AnalizarHTML(cadena):
 
                 else:
                     print(token)
-                    token=""
+                    #token=""
                     print("---------Error Lexico---------")
-                    token=token+letra
+                    #token=token+letra
 
                     NuevoError= ErrorLexHTML(str(letra),str(fila),str(columna))
                     lista_error.append(NuevoError)
@@ -100,6 +101,7 @@ def AnalizarHTML(cadena):
                     indice += 1
                     columna+=1
             print (token)
+            TextoLimpio+=token #---------------------Agregar
 
             token=""
         elif validacion==2: #Digito en A - C
@@ -137,9 +139,9 @@ def AnalizarHTML(cadena):
                     bandera=1                    
                 else:
                     print(token)
-                    token=""
+                    #token=""
                     print("---------Error Lexico---------")
-                    token=token+letra
+                    #token=token+letra
 
                     NuevoError= ErrorLexHTML(str(letra),str(fila),str(columna))
                     lista_error.append(NuevoError)
@@ -148,6 +150,7 @@ def AnalizarHTML(cadena):
                     columna+=1                        
                     
             print (token)
+            TextoLimpio+=token #---------------------Agregar
             token=""
 
         #----------------------Simbolo-----------------
@@ -189,9 +192,9 @@ def AnalizarHTML(cadena):
                     bandera=1
                 else:
                     print(token)
-                    token=""
+                    #token=""
                     print("---------ANY---------")
-                    token=token+letra
+                    #token=token+letra
                     #NuevoError= ErrorLexHTML(str(letra),str(fila),str(columna))
                     #lista_error.append(NuevoError)
                     
@@ -201,7 +204,7 @@ def AnalizarHTML(cadena):
                     bandera=1
 
                         
-
+            TextoLimpio+=token #---------------------Agregar
             print (token)
             token=""
         #-------------------Espacio en Blanco----------------
@@ -228,6 +231,7 @@ def AnalizarHTML(cadena):
                 else:      
                     bandera=1 # Salida Digito
             print (token)
+            TextoLimpio+=token #---------------------Agregar
             token=""
         #-------------------Salto de Linea----------------
         elif validacion==7: #Salto A-F
@@ -258,6 +262,7 @@ def AnalizarHTML(cadena):
                     bandera=1 # Salida Salto
             #print (token) 
             print("")
+            TextoLimpio+=token #---------------------Agregar
             token=""
         #-------------------Cadena-----------------------
         elif validacion==10: # Comilla A- K 
@@ -289,7 +294,7 @@ def AnalizarHTML(cadena):
                     print("ERROR CADENA 1")
                     NuevoError= ErrorLexHTML("Salto-Linea",str(fila),str(columna))
                     lista_error.append(NuevoError)
-                    token=token+letra
+                    #token=token+letra
                     indice+=1
                     columna+=1
                     bandera=1
@@ -304,16 +309,31 @@ def AnalizarHTML(cadena):
                     columna+=1
                 
             print (token)
+            TextoLimpio+=token #---------------------Agregar
             token=""
                 
             
   
         else:
-            print("Lo que sea ")   
+            print("Lo que sea ")
+            TextoLimpio+=letra #---------------------Agregar   
             print(letra)
             indice+=1
             columna+=1 
+
+
+    ImprimirHTMLLimpio(direccion,TextoLimpio)
     return  Consola,lista_error
+
+def ImprimirHTMLLimpio(direccion,TextoCorrecto):
+    print(direccion)
+    os.makedirs(direccion, exist_ok=True)
+
+    ArchivoErroresJS = open(direccion+ "ArchivoHTMLLimpio.html","w") 
+    ArchivoErroresJS.write(TextoCorrecto) 
+    print("Impreso")
+    ArchivoErroresJS.close() 
+
 def ErroresLexicosHTML():
     CadenaHTML=""
     ArchivoErroresHTML = open("ErroresLexicosHTML.html","w") 

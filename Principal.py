@@ -189,7 +189,7 @@ class INTERFACE:
     def MenuAnalizarHTML(self):
         entrada = self.txtEntrada.get("1.0", END) #fila 1 col 0 hasta fila 2 col 10
         #retorno = lexer(entrada)
-        Consola,lista_errorHTML=AnalizarHTML(entrada)
+        Consola,lista_errorHTML=AnalizarHTML(entrada,self.DireccionTemporal)
         self.txtConsola.delete("1.0", END)
         self.txtConsola.insert("1.0", Consola)
         messagebox.showinfo('Project 1', 'Analisis HTML Terminado')

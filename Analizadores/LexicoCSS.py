@@ -21,8 +21,8 @@ def ValidarSimbolo(caracter):
         return 3 # * asterisco   
     elif varascii== 47 :
         return 4 # / diagonal   
-    elif  varascii==92 or varascii==35 or varascii==37 or varascii==61 or varascii==58 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
-        return 5 #simbolos / \ ' % = ; > < ( ) } { + - . , ! & |   
+    elif  varascii==92 or varascii==35 or varascii==37  or varascii==58 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
+        return 5 #simbolos / \ ' %  ; > < ( ) } { + - . , ! & |   
     elif  varascii==32 :
         return 6 #espacio en blanco
     elif varascii==10 :
@@ -103,9 +103,9 @@ def AnalizarCSS(cadena,direccion):
 
                 else:
                     print(token)
-                    token=""
+                    
                     print("---------Error Lexico---------")
-                    token=token+letra
+                    #token=token+letra
                     
                     NuevoError= ErrorLexCSS(str(letra),str(fila),str(columna))
                     lista_error.append(NuevoError)
@@ -146,21 +146,24 @@ def AnalizarCSS(cadena,direccion):
 
                 elif validacion==5 : #Simbolo
                     print("---------Simbolo")
-                    bandera=1      
+                    bandera=1  
+                        
                 elif validacion==6 or validacion==7 : #salto o validacion
                     print ("---------control de linea")
                     bandera=1
                 elif validacion==10: #comillas
                     print ("---------Comillas")
                     bandera=1
+                    
                 elif validacion==1: #Letra
                     print ("---------Letra")
-                    bandera=1                     
+                    bandera=1     
+                                    
                 else:
                     print(token)
                     token=""
                     print("---------Error Lexico---------")
-                    token=token+letra
+                    #token=token+letra
 
                     NuevoError= ErrorLexCSS(str(letra),str(fila),str(columna))
                     lista_error.append(NuevoError)
@@ -215,15 +218,15 @@ def AnalizarCSS(cadena,direccion):
                     bandera=1
                 else:
                     print(token)
-                    token=""
+                    #token=""
                     print("---------ANY---------")
-                    token=token+letra
+                    #token=token+letra
                     #NuevoError= ErrorLexHTML(str(letra),str(fila),str(columna))
                     #lista_error.append(NuevoError)
                     
                     #print("digito")
-                    indice += 1
-                    columna+=1 
+                    #indice += 1
+                    #columna+=1 
                     bandera=1
 
                         
@@ -366,6 +369,7 @@ def AnalizarCSS(cadena,direccion):
             else:
                 letra = cadena[indice]
                 validacion = ValidarSimbolo(letra)
+                
                 #--------------------Comentario de Linea-------------------
 
                 #-------------------Comentario Multilinea--------------
@@ -374,6 +378,10 @@ def AnalizarCSS(cadena,direccion):
                     print("----------Inicio Comentario MultiLinea")
                     while bandera==0: #G-I
                         if indice==len(cadena):
+                            print("Error Lexico")
+                            NuevoError= ErrorLexCSS(str(token),str(fila),str(columna))
+                            lista_error.append(NuevoError)
+                            token=""
                             break
 
                         letra = cadena[indice]
@@ -398,7 +406,6 @@ def AnalizarCSS(cadena,direccion):
                                 
                                 token=token+letra
                                 
-            
                                 indice += 1
                                 columna+=1 
                                 #print("----------Fin Comentario Multilinea--------")                               
@@ -408,7 +415,7 @@ def AnalizarCSS(cadena,direccion):
                                 
                                 token=token+letra
                                 
-            
+                                fila+=1
                                 indice += 1 
                                 columna+=1 
                             
@@ -436,6 +443,8 @@ def AnalizarCSS(cadena,direccion):
                     token=""
                     print("----------Fin Comentario Multilinea--------")
 
+                elif validacion==1 or validacion==2  or validacion==5 or validacion==6 or validacion==7 or validacion==10 :
+                    print("Token") 
 
                 else:
                     
@@ -454,6 +463,7 @@ def AnalizarCSS(cadena,direccion):
                         if validacion==7:
                             NuevoError= ErrorLexCSS("Salto-Linea",str(fila),str(columna))
                             lista_error.append(NuevoError)
+                            
                         else:
                             NuevoError= ErrorLexCSS(str(letra),str(fila),str(columna))
                             lista_error.append(NuevoError)
@@ -461,7 +471,7 @@ def AnalizarCSS(cadena,direccion):
 
                         if validacion==7: # Salto de Linea
                             
-                            #fila+=1
+                            fila+=1
                             columna=1
                             bandera=1
                         #Salida de Comentario
