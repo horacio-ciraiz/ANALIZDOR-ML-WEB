@@ -1,7 +1,7 @@
 from Analizadores.SintacticoExpresion import Evaluar
 
 def LexRTM(cadena):
-    ArregloResultados=[]
+    ArregloResultados=""
     print("Inicio Analisis")
     cadenatoken=""
     columna=1
@@ -61,7 +61,7 @@ def LexRTM(cadena):
             if(cadenatoken!=""):
                 codigoHTML+="\n <tr> <td align=\"center\">" + cadenatoken + "</td><td align=\"center\">" + CadenaValor + "</td></tr>"
                 CadenaValor+="\n"
-                ArregloResultados.append(CadenaValor)
+                ArregloResultados+=CadenaValor 
                  
             cadenatoken=""
             i+=1

@@ -5,7 +5,7 @@ import os
 lista_error = list()
 fila=0
 columna=0
-ConsolaCSS=""
+
 BitacoraCSS=""
 
 
@@ -21,7 +21,7 @@ def ValidarSimbolo(caracter):
         return 3 # * asterisco   
     elif varascii== 47 :
         return 4 # / diagonal   
-    elif  varascii==92 or varascii==35 or varascii==37  or varascii==58 or varascii==59 or varascii==62 or varascii==60 or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
+    elif  varascii==92 or varascii==35 or varascii==37  or varascii==58 or varascii==59  or varascii==40 or varascii==41 or varascii==125 or varascii==123 or varascii==43 or varascii==45  or varascii==46 or varascii==44 or varascii==33 or varascii==38 or varascii==124 :
         return 5 #simbolos / \ ' %  ; > < ( ) } { + - . , ! & |   
     elif  varascii==32 :
         return 6 #espacio en blanco
@@ -41,7 +41,7 @@ def AnalizarCSS(cadena,direccion):
     indice=0
     fila=1
     columna=0
-
+    ConsolaCSS=""
     token=""
     cadenaHTML=""
     CSSLimpio=""
@@ -58,7 +58,7 @@ def AnalizarCSS(cadena,direccion):
             
             #print("Letra")
             token=token+letra
-            
+            ConsolaCSS+="S0->S1 con caracter:"+ letra + "\n"
 
             bandera=0
             indice += 1
@@ -75,14 +75,14 @@ def AnalizarCSS(cadena,direccion):
                     
                     #print("letra")
                     token=token+letra
-                    
+                    ConsolaCSS+="S1->S1 con caracter:"+ letra + "\n"
             
                     indice += 1
                     columna+=1
                 elif validacion==2: #Digito
                     
                     token=token+letra
-                    
+                    ConsolaCSS+="S1->S1 con caracter:"+ letra + "\n"
             
                     #print("digito")
                     indice += 1
@@ -121,7 +121,7 @@ def AnalizarCSS(cadena,direccion):
             print("----------Digito----------")
             
             token=token+letra
-            
+            ConsolaCSS+="S0->S2 con caracter:"+ letra + "\n"
             
             bandera=0
             indice += 1
@@ -136,7 +136,7 @@ def AnalizarCSS(cadena,direccion):
                 if validacion==2: # Digito 
                     #print("letra")
                     token=token+letra
-                    
+                    ConsolaCSS+="S2->S2 con caracter:"+ letra + "\n"
             
                     indice += 1
                     columna+=1
@@ -181,7 +181,7 @@ def AnalizarCSS(cadena,direccion):
             print("----------Simbolo----------")
             
             token=token+letra
-            
+            ConsolaCSS+="S0->S3 con caracter:"+ letra + "\n"
             
             bandera=0
             indice += 1
@@ -197,7 +197,7 @@ def AnalizarCSS(cadena,direccion):
                 if validacion==5: # SIMBOLO 
                     
                     token=token+letra
-                    
+                    ConsolaCSS+="S3->S3 con caracter:"+ letra + "\n"
             
                     indice += 1
                     columna+=1
@@ -240,7 +240,7 @@ def AnalizarCSS(cadena,direccion):
             print("----------Espacio----------")
             
             token=token+letra
-            
+            ConsolaCSS+="S0->S0 con caracter:"+ "Espacio" + "\n"
             
             bandera=0
             indice += 1
@@ -255,7 +255,7 @@ def AnalizarCSS(cadena,direccion):
                 if validacion==6: # ESPACIO EN BLANCO
                     
                     token=token+letra
-                    
+                    ConsolaCSS+="S0->S0 con caracter:"+ "Espacio" + "\n"
             
                     indice += 1
                     columna+=1
@@ -271,7 +271,7 @@ def AnalizarCSS(cadena,direccion):
             
 
             token=token+letra
-            
+            ConsolaCSS+="S0->S0 con caracter:"+ "Salto" + "\n"
             
             bandera=0
             indice += 1
@@ -287,7 +287,7 @@ def AnalizarCSS(cadena,direccion):
                 if validacion==7: # SALTO DE LINEA
                     
                     token=token+letra
-                    
+                    ConsolaCSS+="S0->S0 con caracter:"+ "Salto" + "\n"
             
                     indice += 1
                     columna+=1
@@ -303,7 +303,7 @@ def AnalizarCSS(cadena,direccion):
         elif validacion==10: # Comilla A- K 
             
             token=token+letra
-            
+            ConsolaCSS+="S0->S4 con caracter:"+ letra + "\n"
             
             bandera=0
             indice += 1
@@ -324,7 +324,7 @@ def AnalizarCSS(cadena,direccion):
                     #print("letra")
                     bandera=1
                     token=token+letra
-                    
+                    ConsolaCSS+="S5->S6 con caracter:"+ letra + "\n"
             
                     indice += 1
                     columna+=1
@@ -343,7 +343,7 @@ def AnalizarCSS(cadena,direccion):
                 else: #Lo que sea 
                     
                     token=token+letra
-                    
+                    ConsolaCSS+="S4->S5 con caracter:"+ letra + "\n"
             
                     #print("digito")
                     indice += 1
@@ -358,7 +358,7 @@ def AnalizarCSS(cadena,direccion):
             print("----------Comentario  ----------")
             #token=""
             token=token+letra
-            
+            ConsolaCSS+="S0->S7 con caracter:"+ letra + "\n"
             
             bandera=0
             indice += 1
@@ -391,6 +391,7 @@ def AnalizarCSS(cadena,direccion):
                         if validacion==3: #*Asterisco 
                             
                             token=token+letra
+                            ConsolaCSS+="S7->S8 con caracter:"+ letra + "\n"
                             
             
                             indice += 1 
@@ -405,7 +406,7 @@ def AnalizarCSS(cadena,direccion):
                             if validacion==4: # / Diagonal
                                 
                                 token=token+letra
-                                
+                                ConsolaCSS+="S9->S10 con caracter:"+ letra + "\n"
                                 indice += 1
                                 columna+=1 
                                 #print("----------Fin Comentario Multilinea--------")                               
@@ -414,7 +415,7 @@ def AnalizarCSS(cadena,direccion):
                             else:
                                 
                                 token=token+letra
-                                
+                                ConsolaCSS+="S8->S8 con caracter:"+ letra + "\n"
                                 fila+=1
                                 indice += 1 
                                 columna+=1 
@@ -425,7 +426,7 @@ def AnalizarCSS(cadena,direccion):
                                 validacion=ValidarSimbolo(letra)
                                 if validacion==7:
                                     token=token+letra
-                                    
+                                    ConsolaCSS+="S0->S7 con caracter:"+ letra + "\n"
             
                                     indice += 1 
                                     columna+=1 
@@ -433,6 +434,7 @@ def AnalizarCSS(cadena,direccion):
                                     columna=1
                                 else:    
                                     token=token+letra
+                                    ConsolaCSS+="S0->S7 con caracter:"+ letra + "\n"
                                     
             
                                     indice += 1 
