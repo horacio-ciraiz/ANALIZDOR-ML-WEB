@@ -163,7 +163,9 @@ class Ui_Ventana(object):
 
     def MenuNuevo(self):
         self.textEdit.setText("")
-        self.plainTextEdit.insertPlainText("")
+        Limp=""
+        self.plainTextEdit.setPlainText(Limp)
+        
         #self.textEdit.insertHtml("<html><h1>Hola</html>")
 
     #---------------------MenuAbrir--------------   
